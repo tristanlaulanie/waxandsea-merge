@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 500px;
+            width: 95%;
+            font: 18px / 1.5 sans-serif;
+        }
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+    <div class="example-wrapper">
+        <div class="card">
+            <img src="{{ article.image }}" class="card-img-top" alt="{{ article.titre }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ article.titre }}</h5>
+                <p class="card-text">{{ article.description }}</p>
+                <p class="card-text">{{ article.prix }} €</p>
+                <button class="btn btn-primary add-to-cart" data-url="{{ path('panier_add', {id: article.id}) }}">Ajouter au panier</button>
+
+                <div id="message" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').on('click', function() {
+                var url = $(this).data('url');
+                var quantity = $('#quantity').val();
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: { quantity: quantity },
+                    success: function(response) {
+                        $('#message').html('<div class="alert alert-success">' + response.message + '</div>');
+                    },
+                    error: function(xhr) {
+                        var errorMessage = xhr.status === 404 ? 'Le produit n\'existe pas' : 'Erreur lors de l\'ajout au panier';
+                        $('#message').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

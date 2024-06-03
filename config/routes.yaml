@@ -1,0 +1,14 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+panier_add:
+    path: /panier/add/{id}
+    controller: App\Controller\PanierController::addToCart
+
+panier_show:
+    path: /panier
+    controller: App\Controller\PanierController::showCart
+

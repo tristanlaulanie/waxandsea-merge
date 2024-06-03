@@ -1,0 +1,26 @@
+{# templates/default/product.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+<h1>Nos produits</h1>
+
+<div class="row">
+    {% for produit in products %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ produit.image }}" class="card-img-top" alt="{{ produit.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ produit.name }}</h5>
+                    <p class="card-text">{{ produit.description }}</p>
+                    <p class="card-text">Prix : {{ produit.price }}€</p>
+                    <a href="#" class="btn btn-primary">En savoir +</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
